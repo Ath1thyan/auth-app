@@ -15,6 +15,7 @@ const registerUser = asyncHandler( async (req, res) => {
         res.status(400)
         throw new Error("Password length must be between 6 to 32 characters")
     }
+
     // Check if user email already exists
     const userExists = await User.findOne({email})
     if (userExists) {
@@ -23,11 +24,12 @@ const registerUser = asyncHandler( async (req, res) => {
     }
 
 
+
     // Create new user
     const user = await User.create({
         name,
         email,
-        password
+        password,
     })
 
     if (user) {
