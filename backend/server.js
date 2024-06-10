@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const cookieParser = require("cookie-parser")
 
 const userRoutes = require('./routes/userRoute')
 const errorHandler = require('./middleware/errorMiddleware')
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middlewares
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
