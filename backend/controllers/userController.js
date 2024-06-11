@@ -107,6 +107,7 @@ const loginUser = asyncHandler( async (req, res) => {
     }
 })
 
+
 // Logout User
 const logout = asyncHandler( async (req, res) => {
     res.cookie("token", "", {
@@ -212,6 +213,12 @@ const changePassword = asyncHandler (async (req, res) => {
 })
 
 
+// Forgot password
+const forgotPassword = asyncHandler (async (req, res) => {
+    res.send("Forgot pass")
+})
+
+
 module.exports = {
     registerUser,
     loginUser,
@@ -220,4 +227,5 @@ module.exports = {
     loginstatus,
     updateUser,
     changePassword,
+    forgotPassword,
 }
