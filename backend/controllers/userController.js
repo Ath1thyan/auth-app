@@ -138,9 +138,54 @@ const getUser = asyncHandler( async (req, res) => {
 })
 
 
+// Get login status
+const loginstatus = asyncHandler( async (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.json(false)
+    }
+
+    // Verify token
+    const verified = jwt.verify(token, process.env.JWT_SECRET)
+    if (verified) {
+        return res.json(true)
+    }
+    return res.json(false)
+})
+
+
+// Update user data
+const updateUser = asyncHandler (async (req, res) => {
+    const user = await User.findById(req.user._id)
+    if (user) {
+        const {name, email, photo, phone, role} = user;
+        user.name = req.body.name || name;
+        user.email = email;
+        user.photo = req.body.photo || photo;
+        user.phone = req.body.phone || phone;
+        user.role = req.body.role || role;
+
+        const updatedUser = await user.save()
+        res.status(200).json({
+            name: updatedUser.name,
+            email: updatedUser.email,
+            photo: updatedUser.photo,
+            phone: updatedUser.phone,
+            role: updatedUser.role,
+        })
+    }
+    else {
+        res.status(404)
+        throw new Error("User not found")
+    }
+})
+
+
 module.exports = {
     registerUser,
     loginUser,
     logout,
     getUser,
+    loginstatus,
+    updateUser,
 }
